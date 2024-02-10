@@ -82,6 +82,7 @@ def read_dataset(adata, transpose=False, test_split=False, copy=False):
     adata.obs['DCA_split'] = adata.obs['DCA_split'].astype('category')
     print('### Autoencoder: Successfully preprocessed {} genes and {} cells.'.format(adata.n_vars, adata.n_obs))
 
+    print('Read: ',adata.n_obs) #ADDED
     return adata
 
 def clr_normalize_each_cell(adata):
@@ -104,7 +105,7 @@ def clr_normalize_each_cell(adata):
     return adata
     
 def normalize(adata, filter_min_counts=False, size_factors=True, normalize_input=True, logtrans_input=True): #Make False for standardizing runs
-
+    print('Top Norm: ',adata.n_obs) #ADDED
     if filter_min_counts:
         sc.pp.filter_genes(adata, min_counts=1)
         sc.pp.filter_cells(adata, min_counts=1)
@@ -115,8 +116,10 @@ def normalize(adata, filter_min_counts=False, size_factors=True, normalize_input
         adata.raw = adata
 
     if size_factors:
-        sc.pp.normalize_per_cell(adata)
+        sc.pp.normalize_per_cell(adata,min_counts=0) #Don't filter cells
         adata.obs['size_factors'] = adata.obs.n_counts / np.median(adata.obs.n_counts)
+        print('Bottom Norm: ',adata.n_obs) #ADDED
+        
     else:
         adata.obs['size_factors'] = 1.0
 
