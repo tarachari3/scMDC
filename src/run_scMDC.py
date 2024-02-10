@@ -70,8 +70,8 @@ if __name__ == "__main__":
          y = np.array(data_mat['Y'])
     data_mat.close()
 
-    print(x1.shape()) #ADDED
-    print(x2.shape())
+    print(x1.shape) #ADDED
+    print(x2.shape)
     
     #Gene filter
     if args.filter1:
