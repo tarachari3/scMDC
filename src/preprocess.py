@@ -103,7 +103,7 @@ def clr_normalize_each_cell(adata):
     )
     return adata
     
-def normalize(adata, filter_min_counts=True, size_factors=True, normalize_input=True, logtrans_input=True):
+def normalize(adata, filter_min_counts=False, size_factors=True, normalize_input=True, logtrans_input=True): #Make False for standardizing runs
 
     if filter_min_counts:
         sc.pp.filter_genes(adata, min_counts=1)
