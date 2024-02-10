@@ -157,12 +157,6 @@ class scMultiCluster(nn.Module):
     def pretrain_autoencoder(self, X1, X_raw1, sf1, X2, X_raw2, sf2, 
             batch_size=256, lr=0.001, epochs=400, ae_save=True, ae_weights='AE_weights.pth.tar'):
         num_batch = int(math.ceil(1.0*X1.shape[0]/batch_size))
-        print(torch.Tensor(X1).size()) #PRINT SIZES
-        print(torch.Tensor(X_raw1).size())
-        print(torch.Tensor(sf1).size())
-        print(torch.Tensor(X2).size())
-        print(torch.Tensor(X_raw2).size())
-        print(torch.Tensor(sf2).size())
         dataset = TensorDataset(torch.Tensor(X1), torch.Tensor(X_raw1), torch.Tensor(sf1), torch.Tensor(X2), torch.Tensor(X_raw2), torch.Tensor(sf2))
         dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
         print("Pretraining stage")
