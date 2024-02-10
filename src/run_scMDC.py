@@ -70,6 +70,9 @@ if __name__ == "__main__":
          y = np.array(data_mat['Y'])
     data_mat.close()
 
+    print(x1.shape()) #ADDED
+    print(x2.shape())
+    
     #Gene filter
     if args.filter1:
         importantGenes = geneSelection(x1, n=args.f1, plot=False)
@@ -93,6 +96,7 @@ if __name__ == "__main__":
                       logtrans_input=True)
     
     adata2 = sc.AnnData(x2)
+    print(adata2.n_obs) #ADDED
     #adata2.obs['Group'] = y
     adata2 = read_dataset(adata2,
                      transpose=False,
@@ -104,15 +108,10 @@ if __name__ == "__main__":
                       normalize_input=True,
                       logtrans_input=True)
 
-    print(adata1.n_obs) #ADDED
-    print(adata2.n_obs)
-
     #adata2 = clr_normalize_each_cell(adata2)
 
     input_size1 = adata1.n_vars
     input_size2 = adata2.n_vars
-    print(adata1.n_obs)#ADDED
-    print(adata2.n_obs)
     
     print(args)
     
@@ -132,8 +131,6 @@ if __name__ == "__main__":
             
     t0 = time()
     if args.ae_weights is None:
-        print(adata1.n_obs) #ADDED
-        print(adata2.n_obs)
         model.pretrain_autoencoder(X1=adata1.X, X_raw1=adata1.raw.X, sf1=adata1.obs.size_factors, 
                 X2=adata2.X, X_raw2=adata2.raw.X, sf2=adata2.obs.size_factors, batch_size=args.batch_size, 
                 epochs=args.pretrain_epochs, ae_weights=args.ae_weight_file)
